@@ -23,10 +23,6 @@ class Hand
     nil
   end
   
-  def prompt
-    raise ArgumentError, "subclasses must implement #prompt"
-  end
-
   def discard(cards)
     @cards -= cards 
   end
