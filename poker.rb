@@ -48,19 +48,6 @@ class Poker < Game
       super
     end
 
-    # @return Rule::Result || nil
-    def score
-      rules.sort_by { |r| -r.score }.each do |rule|
-        result = rule.test(self)
-        return result unless result.nil?
-      end 
-      nil
-    end
-
-    def discard(cards)
-      @cards -= cards 
-    end
-
   end
   
 end
