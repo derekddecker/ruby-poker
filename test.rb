@@ -9,7 +9,7 @@ dealer.deal_all
 
 dealer.prompt
 
-puts player.hand.inspect
+dealer.display_hand(player)
 
 result = dealer.win?(player.hand)
 unless result.nil?

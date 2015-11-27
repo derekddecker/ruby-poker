@@ -34,7 +34,8 @@ class Poker < Game
 
         # straight
         rules << Rule.new("straight", 3) do |hand, result|
-          if hand.values.sort.each_cons(5).all? { |a,b| b == a + 1 }
+          vals = hand.values
+          if vals == (vals.min..vals.max).to_a && vals.count == 5
             result.score = hand.values.sort.first
           end 
         end
@@ -61,15 +62,17 @@ class Poker < Game
 
         # straight flush
         rules << Rule.new("straight flush", 7) do |hand, result|
-          if hand.values.sort.each_cons(5).all? { |a,b| b == a + 1 } && hand.suits.uniq.length == 1
+          vals = hand.values
+          if vals == (vals.min..vals.max).to_a && vals.count == 5 && hand.suits.uniq.length == 1
             result.score = hand.values.sort.first
           end 
         end
 
         # royal flush
         rules << Rule.new("royal flush", 8) do |hand, result|
-          if hand.values.sort.each_cons(5).all? { |a,b| b == a + 1 } && hand.suits.uniq.length == 1 && hand.values.sort.reverse.first == 14
-              result.score = 1
+          vals = hand.values
+          if vals == (vals.min..vals.max).to_a && vals.count == 5 && hand.suits.uniq.length == 1 && hand.suits.uniq.length == 1 && hand.values.sort.reverse.first == 14
+            result.score = 1
           end 
         end
       end
