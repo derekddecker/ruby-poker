@@ -28,9 +28,10 @@ class Dealer
   def prompt
     @players.each do |player|
       display_hand(player)
-      puts "Discards:"
-      discards = gets.split(" ").map(&:to_i)
-      player.hand.discard(player.hand.cards.values_at(*discards))
+      puts "Hold:"
+      holds = gets.split(" ").map(&:to_i)
+      discards = player.hand.cards.length.times.inject([]) { |arr, index| arr << player.hand.cards[index] unless holds.include?(index) ; arr }
+      player.hand.discard(discards)
       deal(player, discards.length)
     end
   end

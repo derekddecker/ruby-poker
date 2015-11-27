@@ -16,6 +16,10 @@ class Hand
     cards.collect(&:value).collect(&:value).sort
   end
 
+  def suits
+    cards.collect(&:suit)
+  end
+
   def inspect
     @cards.each do |card|
       puts card.inspect
