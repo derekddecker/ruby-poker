@@ -25,21 +25,41 @@ class Dealer
     hand.score 
   end
 
+  def prompt_string(player)
+    s_hand = display_hand(player)
+    s_hand + "Hold:\n"
+  end
+
+  def discard(player, discards)
+    player.hand.discard(discards)
+    discards.length
+  end
+
+  def hold(player, holds)
+    holds.map!(&:to_i)
+    discard(player, player.hand.cards.length.times.inject([]) { |arr, index| arr << player.hand.cards[index] unless holds.include?(index) ; arr })
+  end
+
+  def prompt_player(player)
+    p_string = prompt_string(player)
+    puts p_string
+    holds = gets.split(" ")
+    discard_length = hold(player, holds)
+    deal(player, discard_length)
+  end
+
   def prompt
     @players.each do |player|
-      display_hand(player)
-      puts "Hold:"
-      holds = gets.split(" ").map(&:to_i)
-      discards = player.hand.cards.length.times.inject([]) { |arr, index| arr << player.hand.cards[index] unless holds.include?(index) ; arr }
-      player.hand.discard(discards)
-      deal(player, discards.length)
+      prompt_player(player)
     end
   end
   
   def display_hand(player)
+    hand = ""
     player.hand.cards.each_with_index do |card, index|
-      puts "[#{index}] #{card}"
+      hand += "[#{index}] #{card}\n"
     end 
+    hand
   end
 
 end
