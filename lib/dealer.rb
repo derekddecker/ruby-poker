@@ -36,6 +36,7 @@ class Dealer
   end
 
   def hold(player, holds)
+	 return discard(player, ([]).tap { |a| player.hand.cards.each_with_index { |card, index| a << card unless holds.include?(card) } }) if holds.first.is_a?(Card)
     holds.map!(&:to_i)
     discard(player, player.hand.cards.length.times.inject([]) { |arr, index| arr << player.hand.cards[index] unless holds.include?(index) ; arr })
   end
